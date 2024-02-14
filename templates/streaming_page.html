@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Webcam Streaming</title>
+    <style>
+        #video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #video-player {
+            flex: 1;
+        }
+
+        #webcam-img {
+            display: none;
+            width: 1080px;
+            height: 720px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Webcam Streaming</h1>
+    <div id="video-container">
+        <video width="1250" height="480" id="video-player" controls>
+            <!-- Replace '/static/example_video.mp4' with the actual URL of your video -->
+            <source src="{{ url_for('static', filename=video_name) }}" type="video/mp4">
+            <!-- Add other video sources here for cross-browser compatibility if needed -->
+        </video>
+        <img src="{{ url_for('video_feed')}}" id="webcam-img">
+    </div>
+
+    <script>
+        const videoPlayer = document.getElementById('video-player');
+        const webcamImg = document.getElementById('webcam-img');
+
+        // Wait for the video to be loaded and then ask for webcam permission
+        videoPlayer.addEventListener('loadedmetadata', () => {
+            // Ask for webcam permission
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    // Permission granted, show the video player
+                    videoPlayer.style.display = 'block';
+                    webcamImg.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error accessing webcam:', error);
+                    alert('Permission to access webcam is required to see the webcam stream.');
+                    // Show the webcam image if permission is not granted
+                    videoPlayer.style.display = 'none';
+                    webcamImg.style.display = 'block';
+                });
+        });
+
+        // Event listener to detect when the video ends
+        videoPlayer.addEventListener('ended', () => {
+            // Show the webcam image
+            videoPlayer.style.display = 'none';
+            webcamImg.style.display = 'block';
+
+            // Ask for webcam permission again (in case the user denied it before)
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    webcamImg.srcObject = stream;
+                })
+                .catch(error => {
+                    console.error('Error accessing webcam:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

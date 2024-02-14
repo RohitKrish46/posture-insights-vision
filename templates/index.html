@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Website</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        .jumbotron {
+            background-image: url('/static/exercise-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .jumbotron h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .jumbotron p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn-get-started {
+            background-color: #ff4c29;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-get-started:hover {
+            background-color: #e54024;
+        }
+
+        .exercise-card {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .exercise-card .card-body {
+            padding: 20px;
+        }
+
+        #video-container {
+            display: none;
+            /* display: flex; */
+        }
+
+        #video-player {
+            flex: 1;
+        }
+
+        .info-box {
+            padding: 2px;
+            background-color: #c4ecec;
+            border-radius: 4px;
+            padding: 20px
+        }
+
+
+        .box {
+            padding: 1px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .box:hover {
+            background-color: #eaeaea;
+        }
+
+        #turnoff_webcam {
+            display: none;
+        }
+
+        .box h2 {
+            margin-top: 0;
+            /* font-size: 20px; */
+            color: #333;
+        }
+
+        .title {
+            text-align: center;
+        }
+
+        .box p {
+            /* margin-bottom: 0; */
+            color: #777;
+        }
+
+        #dimensions-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #image-dimensions {
+            margin-left: 20px;
+            /* Adjust the margin as needed */
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Exercise-Pose Estimation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Exercises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Workout Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to the Exercise-Pose Estimation</h1>
+            <p>Get fit and stay healthy with our wide range of exercises and workout plans.</p>
+            <a class="btn btn-get-started btn-lg" href="#container" role="button">Get Started</a>
+        </div>
+    </header>
+
+    <br>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="exercise-card">
+                    <img src="/static/exercise1.jpg" class="card-img-top" alt="Exercise 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Push Ups</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="{{ url_for('check_tnc', video='push_ups.mp4') }}">
+                            <button type="button" class="btn btn-primary" onclick="redirectToStreamingPage()">Start</button>
+                        </a>
+                        <!-- <a href="{{ url_for('play_video', video='push_ups.mp4') }}">
+                            <button type="button" class="btn btn-primary">Start</button>
+                        </a> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="exercise-card">
+                    <img src="/static/exercise2.jpg" class="card-img-top" alt="Exercise 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Bicep Curl</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="{{ url_for('check_tnc', video='bicep_curl.mp4') }}">
+                            <button type="button" class="btn btn-primary" onclick="redirectToStreamingPage()">Start</button>
+                        </a>
+                        <!-- <a href="{{ url_for('play_video', video='running.mp4') }}">
+                            <button id="exe_start" type="button" class="btn btn-primary">Start</button>
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="exercise-card">
+                    <img src="/static/exercise3.jpg" class="card-img-top" alt="Exercise 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Squats</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="{{ url_for('check_tnc', video='bicep_curl.mp4') }}">
+                            <button type="button" class="btn btn-primary" onclick="redirectToStreamingPage()">Start</button>
+                        </a>
+                        <!-- <a href="{{ url_for('play_video', video='Squats.mp4') }}">
+                            <button type="button" class="btn btn-primary">Start</button>
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--     
+      <footer class="bg-dark text-light text-center py-3">
+        <p>&copy; 2023 Exercise Website. All rights reserved.</p>
+      </footer> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div id="video-container">
+        <div id="dimensions-container">
+            <span id="image-dimensions"></span> <br>
+            <div class="info-box">
+                <h2>Posture Board</h2>
+                <div class="box">
+                    <p id='info1'></p>
+                </div>
+                <div class="box">
+                    <p id="info2"></p>
+                </div>
+                <div class="box">
+                    <p id="info3"></p>
+                </div>
+                <div class="box">
+                    <p id="info4"></p>
+                </div>
+                <div class="box">
+                    <p id="info5"></p>
+                </div>
+                <div class="box">
+                    <p id="info6"></p>
+                </div>
+                <div class="box">
+                    <p id="info7"></p>
+                </div>
+            </div>
+
+        </div>
+        <video width="640" height="480" id="video-player"></video>
+    </div>
+    <br>
+    <div id="turnoff_webcam" style="text-align: center;">
+        <button class="btn btn-primary" id="turn-off-webcam">Turn Off Webcam</button>
+    </div>
+    <br>
+
+    <footer class="bg-dark text-light text-center py-3">
+        <p>&copy; 2023 Exercise-Pose Estimation. All rights reserved.</p>
+    </footer>
+    <script>
+       
+    </script>
+</body>
+
+</html>

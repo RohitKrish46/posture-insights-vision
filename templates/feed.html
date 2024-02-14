@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Website</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        .jumbotron {
+            background-image: url('/static/exercise-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .jumbotron h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .jumbotron p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn-get-started {
+            background-color: #ff4c29;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-get-started:hover {
+            background-color: #e54024;
+        }
+
+        .exercise-card {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .exercise-card .card-body {
+            padding: 20px;
+        }
+
+        #video-container {
+            display: flex;
+        }
+
+
+
+        .info-box {
+            position: absolute;
+            top: 36px;
+            left: 50px;
+            padding: 10px;
+            background-color: #c4ecec;
+            border-radius: 4px;
+            /* padding: 2px;
+            background-color: #c4ecec;
+            border-radius: 4px;
+            padding: 20px; */
+            display: none;
+            opacity: 0.7;
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+        }
+
+
+        .box {
+            padding: 1px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .box:hover {
+            background-color: #eaeaea;
+        }
+
+        #turnoff_webcam {
+            display: none;
+        }
+
+        .box h2 {
+            margin-top: 0;
+            /* font-size: 20px; */
+            color: #333;
+        }
+
+        .title {
+            text-align: center;
+        }
+
+        .box p {
+            /* margin-bottom: 0; */
+            color: black;
+        }
+
+        #dimensions-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #video-player {
+            flex: 1;
+            padding-left: 2%;
+        }
+
+
+        #turnoff_webcam {
+            position: absolute;
+            top: -45%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        #turn-off-webcam-btn {
+            padding: 20px 30px;
+            background-color: #ff4c29;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #turn-off-webcam-btn:hover {
+            background-color: #e54024;
+        }
+
+        #image-dimensions {
+            margin-left: 20px;
+            /* Adjust the margin as needed */
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        #webcam-img {
+            display: none;
+            /* width: 78%;
+            max-width: none;
+            height: 70vh; */
+            /* padding: 2%; */
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">Exercise-Pose Estimation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Exercises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Workout Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div id="video-container">
+        <div id="dimensions-container">
+            <span id="image-dimensions"></span> <br>
+            <div class="info-box" id="info-box">
+                <h2>Posture Board</h2>
+
+            </div>
+
+        </div>
+        <video width="640" height="480" id="video-player">
+
+            <source src="{{ url_for('static', filename=video_name) }}" type="video/mp4">
+
+        </video>
+        <div id="skip-button-container" style="text-align: center; display: none;">
+            <button class="btn btn-primary" id="skip-button">Skip Video</button>
+        </div>
+        <img src="{{url_for('video_feed')}}" id="webcam-img">
+
+    </div>
+    <br>
+    <div id="turnoff_webcam">
+        <a href="/clear_all">
+            <button class="btn btn-primary" id="turn-off-webcam">Turn Off Webcam</button>
+        </a>
+    </div>
+    <br>
+
+    <footer class="bg-dark text-light text-center py-3" id="footer_bar">
+        <p>&copy; 2023 Exercise-Pose Estimation. All rights reserved.</p>
+    </footer>
+    <script>
+        var dataFromServer = '{{video_name | tojson | safe}}'
+        let data_fields = '{{data_fields | tojson | safe}}'
+
+        const webcamImg = document.getElementById('webcam-img');
+        const infoBox = document.getElementById('info-box');
+        const navBar = document.getElementById('navbar');
+
+        const webcam = document.getElementById('turnoff_webcam');
+        const videoPlayer = document.getElementById('video-player');
+        const videoContainer = document.getElementById('video-container')
+        // const turnOffWebcamBtn = document.getElementById('turn-off-webcam');
+        const captureFrameBtn = document.getElementById('capture-frame');
+        const dimensionsContainer = document.getElementById('dimensions-container');
+        const imageDimensions = document.getElementById('image-dimensions');
+        const footer_bar = document.getElementById('footer_bar');
+
+        // let webcamStream;
+        let captureInterval;
+
+        function adjustWebcamHeight() {
+            const webcamContainer = document.getElementById('video-container');
+            const infoBox = document.getElementById('info-box');
+
+            const infoBoxHeight = infoBox.offsetHeight;
+            const webcamHeight = webcamContainer.offsetHeight;
+
+            if (infoBoxHeight > webcamHeight) {
+                webcamContainer.style.height = infoBoxHeight + 'px';
+            }
+        }
+
+
+        async function fetchProcessData() {
+            try {
+                const response = await fetch('/process_data');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching process data:', error);
+                return null;
+            }
+        }
+
+        // async function turnOnCv2() {
+        //     try {
+        //         const response = await fetch('/turn_on');
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error fetching process data:', error);
+        //         window.location.href = '/'
+        //         return null;
+        //     }
+        // }
+
+
+        // window.addEventListener('scroll', adjustInfoBoxPosition);
+
+        // function adjustInfoBoxPosition() {
+        //     const scrollY = window.scrollY;
+        //     const infoBox = document.getElementById('info-box');
+        //     infoBox.style.top = `${scrollY + 36}px`; // Adjust the top position based on scrollY
+        // }
+
+        // Function to hide the navbar
+        function hideNavbar() {
+            navBar.style.display = 'none';
+            footer_bar.style.display = 'none';
+        }
+
+        const onLoadAsync = async () => {
+            document.getElementById('skip-button-container').style.display = 'block';
+            videoPlayer.controls = true;
+            videoPlayer.play();
+            videoPlayer.addEventListener('ended', async function () {
+                // webcamImg.src = "{{ url_for('video_feed')}}"
+                document.getElementById('skip-button-container').style.display = 'none';
+                video = videoPlayer.getAttribute('source')
+                videoPlayer.controls = false;
+                videoPlayer.style.display = "none"
+                infoBox.style.display = 'block'
+                videoContainer.style.position = 'relative'
+                webcam.style.display = 'flex'
+                webcamImg.style.display = 'flex';
+
+                // webcamImg.src = "{{ url_for('video_feed')}}"
+                hideNavbar();
+                await showImageDimensions();
+            });
+        }
+
+        window.addEventListener('load', onLoadAsync);
+
+
+        // Add event listener to the Skip button to stop video playback
+        const skipButton = document.getElementById('skip-button');
+        skipButton.addEventListener('click', async function () {
+            videoPlayer.pause();
+            // webcamImg.src = "{{ url_for('video_feed')}}"
+
+            document.getElementById('skip-button-container').style.display = 'none';
+            videoPlayer.controls = false;
+            webcam.style.display = 'flex'
+            webcamImg.style.display = 'flex';
+            videoPlayer.style.display = "none"
+            infoBox.style.display = 'block'
+            videoContainer.style.position = 'relative'
+            // await requestWebcamAccess();
+
+            hideNavbar();
+            showImageDimensions();
+
+
+        });
+
+        const interval = setInterval(showImageDimensions, 2000);
+
+        // // Turn off the webcam stream
+        // turnOffWebcamBtn.addEventListener('click', function () {
+        //     if (webcamStream) {
+        //         webcamImg.src = ""
+        //         const tracks = webcamStream.getTracks();
+        //         tracks.forEach(track => track.stop());
+        //         webcamStream = null;
+        //         clearInterval(captureInterval);
+        //         console.log('Webcam stream turned off!');
+        //         location.reload();
+        //     }
+        // });
+
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        // Request webcam access
+        // async function requestWebcamAccess() {
+        //     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+
+        //         navigator.mediaDevices.getUserMedia({ video: true })
+        //             .then(async function (stream) {
+        //                 // Webcam access granted
+        //                 await turnOnCv2()
+        //                 video = videoPlayer.getAttributeNames()
+
+        //                 console.log('Webcam access granted!');
+
+        //                 hideNavbar(); // Hide the navbar when webcam access is granted
+        //                 // webcamStream = stream;
+        //                 webcam.style.display = 'flex'
+        //                 videoPlayer.srcObject = stream;
+        //                 webcamImg.style.display = 'flex';
+        //                 infoBox.style.display = 'block'
+        //                 // webcamImg.srcObject = stream;
+        //                 // captureInterval = setInterval(captureFrame, 1000); // Capture frame every 1 second
+        //             })
+        //             .catch(function (error) {
+        //                 // Failed to access webcam
+        //                 // window.location.href = '/'
+        //                 console.error('Webcam access denied:', error);
+        //             });
+        //     }
+        // }
+
+        function resetVideoAndWebcam() {
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+            dimensionsContainer.style.display = 'none';
+        }
+
+
+        async function showImageDimensions(data) {
+            check = infoBox.querySelector('.box')
+            console.log("check_1", check)
+            if (check == null) {
+                for (ele in JSON.parse(data_fields)) {
+                    var newDiv = document.createElement("div");
+                    newDiv.className = "box";
+                    newDiv.id = "box"
+                    data = await fetchProcessData()
+                    var newParagraph = document.createElement("p");
+
+                    newParagraph.textContent = `${JSON.parse(data_fields)[ele]}: ${data[JSON.parse(data_fields)[ele].replace(' ', '_').toLowerCase()]} `
+
+                    newDiv.appendChild(newParagraph);
+
+                    infoBox.appendChild(newDiv);
+                }
+            } else {
+
+                var paragraphs = infoBox.querySelectorAll('.box p');
+                for (let i = 0; i < paragraphs.length; i++) {
+                    const field = JSON.parse(data_fields)[i];
+                    data = await fetchProcessData()
+
+                    console.log('field', field)
+                    console.log('data', data)
+                    paragraphs[i].textContent = `${field}: ${data[field.replace(' ', '_').toLowerCase()]}`;
+                }
+            }
+            dimensionsContainer.style.display = 'flex';
+            adjustWebcamHeight();
+        }
+    </script>
+
+</body>
+
+</html>

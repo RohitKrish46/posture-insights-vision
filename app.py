@@ -6,10 +6,9 @@ import cv2
 from flask import Flask, jsonify, render_template, request, url_for, Response, redirect
 from flask import send_from_directory
 from PIL import Image
-# from requests import Response
 from ultralytics import YOLO
-from curls import perform_curl
-from planks import perform_plank
+from scripts.curls import perform_curl
+from scripts.planks import perform_plank
 import numpy as np
 
 

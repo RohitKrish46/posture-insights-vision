@@ -2,6 +2,50 @@
 
 This project aims to assist anyone who is trying to rectify their exercise postures and provide a visual keypoint mapping whenever the posture for a particular exercise is bad/wrong.
 
+## Steps to Run
+
+
+1. **Create a Virtual Environment**: 
+    ```
+    python -m venv env
+    ```
+
+2. **Activate the Virtual Environment**:
+   
+   - On Windows 
+      ```
+      env\Scripts\activate
+      ```
+
+   - On macOS and Linux
+      ```
+      source env/bin/activate
+      ```
+
+4. **Install Required Packages**: 
+    ```
+    pip install -r requirements.txt
+    ```
+
+5. **Download the YOLOV8 Model**:
+    - Download the desired YOLOV8 model and store it under the 'models' folder.
+    - You can download ultralytics models using:
+
+      ```
+      model = YOLO('yolov8m.pt')
+      ```
+
+6. **Run the Flask App**: 
+    ```
+    flask run
+    ```
+   
+7. **Check the Web Application**:
+   
+    Once the Flask app is running, open your browser and go to [http://127.0.0.1:5000](http://127.0.0.1:5000) to view the application.
+
+   
+    
 ## Posture Insights Architecture
 ![image](https://github.com/RohitKrish46/posture-insights-vision/assets/25106707/6b131930-6689-47d5-b977-507813de50d3)
 

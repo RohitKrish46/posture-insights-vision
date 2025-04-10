@@ -28,7 +28,12 @@ Whether you're doing push-ups, planks, or curls, this tool acts as your virtual 
     - Motion flow
 
 5. **Real-Time Feedback**: If poor posture is detected, alerts are displayed on the UI instantly.
-    
+
+## 🎯Sample Output
+
+![output](https://github.com/user-attachments/assets/6a959ea0-cee5-43b4-a9f7-62086ebdc9fa)  ![output_pushup](https://github.com/user-attachments/assets/bbdb582f-a8ed-408f-be4b-d805d79d8c7a)
+
+
 
 ## ⚙️ Features
 

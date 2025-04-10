@@ -1,16 +1,72 @@
-# posture-insights-vision 
+# 🧘‍♂️posture-insights-vision 
 
-This project aims to assist anyone who is trying to rectify their exercise postures and provide a visual keypoint mapping whenever the posture for a particular exercise is bad/wrong.
+> Real-time exercise form correction using YOLOv8 pose estimation — your personal AI fitness assistant.
 
-## Steps to Run
+## 🚀 Overview
+
+Posture Insights Vision is a computer vision-based system designed to provide real-time feedback on exercise posture and form. Leveraging YOLOv8's pose estimation, this project helps users self-correct during workouts by identifying improper alignment and joint angles, all through a simple web interface powered by Flask and OpenCV.
+
+Whether you're doing push-ups, planks, or curls, this tool acts as your virtual personal trainer to ensure you're doing it right.
+
+## 🧠 How It Works
+
+![image](https://github.com/RohitKrish46/posture-insights-vision/assets/25106707/6b131930-6689-47d5-b977-507813de50d3)
 
 
-1. **Create a Virtual Environment**: 
+1. **Web Interface Launch**: Users open a Flask-powered web interface and select an exercise.
+
+2. **Webcam Activation**: The app activates the webcam to begin capturing live video.
+
+3. **Pose Estimation**: Each frame is passed through YOLOv8's pose estimation model, detecting 17 key body joints in real-time.
+
+4. **Heuristic Analysis**: Based on selected exercise, relevant joints are analyzed for:
+
+    - Joint angles
+    
+    - Body alignment
+    
+    - Motion flow
+
+5. **Real-Time Feedback**: If poor posture is detected, alerts are displayed on the UI instantly.
+    
+
+## ⚙️ Features
+
+- ✅ Real-time posture detection
+
+- 🎯 Accurate joint tracking with YOLOv8
+
+- 🧩 Modular exercise-specific heuristics
+
+- 💻 Lightweight Flask app with webcam streaming
+
+- 📈 Designed to work on local machines with webcam access
+
+
+## 🧪 Supported Exercises & Heuristics
+
+Each heuristic is designed using joint angle thresholds and motion trajectory tracking based on keypoints detected per frame:
+
+1. **Plank** – Ensures shoulder, hip, and ankle are aligned in a straight line.
+
+2. **Push-up** – Tracks elbow flexion and extension, back curvature, and wrist alignment.
+
+3. **Bicep Curl** – Measures elbow joint angle to ensure full range of motion and controlled return.
+
+## 🛠️ Getting Started
+
+
+1. **Clone the Repository**: 
     ```
-    python -m venv env
+    git clone https://github.com/RohitKrish46/posture-insights-vision.git
+    cd posture-insights-vision
     ```
+2. **Create a Virtual Environment**:
+   ```
+   python -m venv env
+   ```
 
-2. **Activate the Virtual Environment**:
+3. **Activate the Virtual Environment**:
    
    - On Windows 
       ```
@@ -22,7 +78,7 @@ This project aims to assist anyone who is trying to rectify their exercise postu
       source env/bin/activate
       ```
 
-4. **Install Required Packages**: 
+4. **Install Dependencies**: 
     ```
     pip install -r requirements.txt
     ```
@@ -32,43 +88,51 @@ This project aims to assist anyone who is trying to rectify their exercise postu
     - You can download ultralytics models using:
 
       ```
-      model = YOLO('yolov8m.pt')
+      from ultralytics import YOLO
+      model = YOLO('yolov8m-pose.pt')
       ```
 
-6. **Run the Flask App**: 
+6. **Launch the Flask App**: 
     ```
     flask run
     ```
    
-7. **Check the Web Application**:
+8. **Open in Browser**:
    
-    Once the Flask app is running, open your browser and go to [http://127.0.0.1:5000](http://127.0.0.1:5000) to view the application.
-
-   
-    
-## Posture Insights Architecture
-![image](https://github.com/RohitKrish46/posture-insights-vision/assets/25106707/6b131930-6689-47d5-b977-507813de50d3)
-
-## How it works
-
-- The user initiates the exercise session by accessing the Flask-hosted webpage.
-- Subsequently, they select a specific exercise from the available options.
-- Upon selecting the exercise, the webcam interface activates, capturing the user's posture in real time.
-- Each captured frame undergoes YOLO's pose estimation model analysis, yielding critical information about 17 key joints.
-- Based on the exercise type, relevant key points are extracted and employed within heuristic functions to calculate joint angles and motion patterns.
-- The heuristic functions then communicate with the Flask server, generating messages if incorrect posture is detected, which are promptly displayed on the Flask UI.
+   Navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000) to start using the app.
 
 
-## Playing with YOLOv8’s Pose Estimation Model
+## 🧪 Playing with YOLOv8's Pose Estimation
 
-I wanted to play with the latest Yolo's pose estimation model for its single-pass architecture eliminates the need for multiple iterations, leading to faster inference speeds. YOLO's ability to detect multiple key points in a single pass aligns well with the complex and dynamic nature of human poses. Additionally, YOLO's deep convolutional neural network architecture has proven effective in handling complex spatial relationships and feature extraction, which are essential for accurate pose estimation.
+YOLOv8's pose model is ideal for this use case due to:
 
-## Exercise Correction Heuristics 
+- Single-pass detection of all keypoints
 
-These are the Exercise for which I have created heuristics for
+- High FPS for real-time inference
 
-1. Plank
-2. Pushup
-3. Bicep Curl
+- Strong accuracy for joint localization
 
-All exercise heuristics revolve around detecting joint angles and joint motion. These angles are derived from the keypoint data obtained through YOLOv8's pose model, while motion details are extracted from the processing of consecutive frames. With this information at hand, we can establish thresholds for both joint angles and joint motion.
+The model outputs coordinates for 17 joints, which are further processed using geometric and motion-based heuristics.
+
+## Project Structure
+```
+posture-insights-vision/
+│
+├── app.py                   # Flask app entry point
+├── models/                  # YOLOv8 model files
+├── static/                  # CSS and JS files
+├── templates/               # HTML templates
+├── utils/
+│   └── heuristics.py        # Heuristic functions for posture detection
+├── requirements.txt
+└── README.md
+```
+
+## 📌 Future Enhancements
+1. 🏋️ Add more exercises (e.g., squats, lunges)
+
+2. 📊 Add feedback history and performance metrics
+
+3. 🤖 Integrate with fitness APIs for tracking
+
+4. 📱 Port to mobile or desktop apps

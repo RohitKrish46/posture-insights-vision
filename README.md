@@ -1,14 +1,14 @@
-# 🧘‍♂️posture-insights-vision 
+# posture-insights-vision 
 
 > Real-time exercise form correction using YOLOv8 pose estimation — your personal AI fitness assistant.
 
-## 🚀 Overview
+## Overview
 
 Posture Insights Vision is a computer vision-based system designed to provide real-time feedback on exercise posture and form. Leveraging YOLOv8's pose estimation, this project helps users self-correct during workouts by identifying improper alignment and joint angles, all through a simple web interface powered by Flask and OpenCV.
 
 Whether you're doing push-ups, planks, or curls, this tool acts as your virtual personal trainer to ensure you're doing it right.
 
-## 🧠 How It Works
+## How It Works
 
 ![image](https://github.com/RohitKrish46/posture-insights-vision/assets/25106707/6b131930-6689-47d5-b977-507813de50d3)
 
@@ -29,13 +29,13 @@ Whether you're doing push-ups, planks, or curls, this tool acts as your virtual 
 
 5. **Real-Time Feedback**: If poor posture is detected, alerts are displayed on the UI instantly.
 
-## 🎯Sample Output
+## Sample Output
 
 ![output](https://github.com/user-attachments/assets/6a959ea0-cee5-43b4-a9f7-62086ebdc9fa)  ![output_pushup](https://github.com/user-attachments/assets/bbdb582f-a8ed-408f-be4b-d805d79d8c7a)
 
 
 
-## ⚙️ Features
+## Features
 
 - ✅ Real-time posture detection
 
@@ -48,7 +48,7 @@ Whether you're doing push-ups, planks, or curls, this tool acts as your virtual 
 - 📈 Designed to work on local machines with webcam access
 
 
-## 🧪 Supported Exercises & Heuristics
+## Supported Exercises & Heuristics
 
 Each heuristic is designed using joint angle thresholds and motion trajectory tracking based on keypoints detected per frame:
 
@@ -58,7 +58,7 @@ Each heuristic is designed using joint angle thresholds and motion trajectory tr
 
 3. **Bicep Curl** – Measures elbow joint angle to ensure full range of motion and controlled return.
 
-## 🛠️ Getting Started
+## Getting Started
 
 
 1. **Clone the Repository**: 
@@ -107,7 +107,7 @@ Each heuristic is designed using joint angle thresholds and motion trajectory tr
    Navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000) to start using the app.
 
 
-## 🧪 Playing with YOLOv8's Pose Estimation
+## Playing with YOLOv8's Pose Estimation
 
 YOLOv8's pose model is ideal for this use case due to:
 
@@ -133,11 +133,11 @@ posture-insights-vision/
 └── README.md
 ```
 
-## 📌 Future Enhancements
-1. 🏋️ Add more exercises (e.g., squats, lunges)
+## Future Enhancements
+1. Add more exercises (e.g., squats, lunges)
 
-2. 📊 Add feedback history and performance metrics
+2. Add feedback history and performance metrics
 
-3. 🤖 Integrate with fitness APIs for tracking
+3. Integrate with fitness APIs for tracking
 
-4. 📱 Port to mobile or desktop apps
+4. Port to mobile or desktop apps
